@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>ProgramadorFajuto.Application.Aplicacao.Util</AssemblyName>
+    <RootNamespace>ProgramadorFajuto.Application.Aplicacao.Util</RootNamespace>
+  </PropertyGroup>
+
+</Project>

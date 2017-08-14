@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <AssemblyName>ProgramadorFajuto.Portal</AssemblyName>
-    <RootNamespace>ProgramadorFajuto.Portal</RootNamespace>
+    <AssemblyName>ProgramadorFajuto.Web.Portal</AssemblyName>
+    <RootNamespace>ProgramadorFajuto.Web.Portal</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

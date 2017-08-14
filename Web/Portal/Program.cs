@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
-namespace ProgramadorFajuto.Portal
+namespace ProgramadorFajuto.Web.Portal
 {
     public class Program
     {

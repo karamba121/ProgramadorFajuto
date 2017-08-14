@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ProgramadorFajuto.Portal
+namespace ProgramadorFajuto.Web.Portal
 {
     public class Startup
     {
