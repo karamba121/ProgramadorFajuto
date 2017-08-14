@@ -1,0 +1,9 @@
+﻿@{
+    ViewData["Title"] = "Formatar Email Marketing";
+}
+
+<form asp-controller="Ferramentas" asp-action="FormatarEmailMarketing" enctype="multipart/form-data">
+    <label>Arquivo .html recortado</label>
+    <input type="file" name="arquivo" multiple />
+    <button type="submit" class="btn"><b>Enviar</b></button>
+</form>
