@@ -1,0 +1,9 @@
+{
+  "name": "Portal",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "v4.0.0-beta",
+    "pjax": "^0.2.4",
+    "sweetalert" : "^1.1.3"
+  }
+}

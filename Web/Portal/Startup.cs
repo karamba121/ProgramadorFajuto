@@ -1,10 +1,19 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Net.Http.Headers;
+using ProgramadorFajuto.Application.Aplicacao.Portal.Contratos;
+using ProgramadorFajuto.Application.Aplicacao.Portal.Servicos;
 using ProgramadorFajuto.Application.Aplicacao.Util;
+using ProgramadorFajuto.Infraestructure.Infra.Contratos;
 using ProgramadorFajuto.Infraestructure.Infra.Servicos.EF;
+using ProgramadorFajuto.Infraestructure.Infra.Servicos.ServicoDeAutenticacao;
+using ProgramadorFajuto.Infraestructure.Infra.Servicos.ServicoDeCriptografia;
+using ProgramadorFajuto.Infraestructure.Infra.Servicos.ServicoDeInicializacao;
+using System;
 
 namespace ProgramadorFajuto.Web.Portal
 {
@@ -19,15 +28,46 @@ namespace ProgramadorFajuto.Web.Portal
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddOptions();
             services.Configure<VariaveisDeAmbiente>(this.Configuration);
             services.AddDbContext<ContextoEF>(options => { options.UseSqlServer(this.Configuration.GetValue<string>("ConnectionString")); });
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(o =>
+            {
+                o.LoginPath = new PathString("/Login/Index/");
+                o.LogoutPath = new PathString("/Login/Deslogar/");
+            });
+
+            services.AddDistributedMemoryCache();
+            services.AddSession();
             services.AddMvc();
+
+            services.AddSingleton(typeof(IHttpContextAccessor), typeof(HttpContextAccessor));
+
+            services.AddScoped(typeof(IServicoDeInicializacao), typeof(Inicializador));
+            services.AddScoped(typeof(IServicoDePersistencia), typeof(UnidadeDeTrabalhoEF));
+            services.AddScoped(typeof(IServicoDeCriptografia), typeof(CriptografiaSHA256));
+            services.AddScoped(typeof(IServicoDeAutenticacao), typeof(AutenticacaoPorCookie));
+
+            services.AddScoped(typeof(IServicoDeLogin), typeof(ServicoDeLogin));
+            services.AddScoped(typeof(IServicoDeHome), typeof(ServicoDeHome));
+            services.AddScoped(typeof(IServicoDeFerramentas), typeof(ServicoDeFerramentas));
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IServiceProvider serviceProvider)
         {
-            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                OnPrepareResponse = prepareResponse =>
+                {
+                    prepareResponse.Context.Response.Headers[HeaderNames.CacheControl] = "public, max-age=31622400";
+                }
+            });
+
+            app.UseSession();
+            app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
+
+            serviceProvider.GetService<IServicoDeInicializacao>().GG();
         }
     }
 }

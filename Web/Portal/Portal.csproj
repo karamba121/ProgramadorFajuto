@@ -11,16 +11,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Application\Aplicacao.Portal\Aplicacao.Portal.csproj" />
     <ProjectReference Include="..\..\Application\Aplicacao.Util\Aplicacao.Util.csproj" />
     <ProjectReference Include="..\..\Infraestructure\Infra\Infra.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\css\" />
-    <Folder Include="wwwroot\fonts\" />
-    <Folder Include="wwwroot\icons\" />
     <Folder Include="wwwroot\img\" />
-    <Folder Include="wwwroot\js\" />
   </ItemGroup>
 
 </Project>

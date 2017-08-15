@@ -1,14 +1,43 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>@ViewData["Title"]</title>
+
+    <link rel="icon" href="~/favicon.ico" type="image/x-icon" />
+
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/sweetalert/dist/sweetalert.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" async defer asp-append-version="true"></script>
 </head>
-<body>
-    <a href="@Url.Action("FormatarEmailMarketing", "Ferramentas")">Formatar email marketing</a>
-    @RenderBody()
+<body class="carregando">
+
+    @Html.Partial("_Header")
+
+    <main>
+        <div id="content">
+            @RenderBody()
+        </div>
+    </main>
+
+    @Html.Partial("_Menu")
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/popper.js/dist/popper.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/lib/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="~/js/site.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/ga-lite/latest/ga-lite.min.js" async defer asp-append-version="true"></script>
+    <script>
+        var galite = galite || {};
+        galite.UA = 'UA-91931290-1';
+    </script>
 
     @RenderSection("Scripts", required: false)
+    @Html.Partial("_Mensagens")
 </body>
 </html>

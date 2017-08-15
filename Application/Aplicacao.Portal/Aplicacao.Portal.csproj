@@ -6,4 +6,9 @@
     <RootNamespace>ProgramadorFajuto.Application.Aplicacao.Portal</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Infraestructure\Infra\Infra.csproj" />
+    <ProjectReference Include="..\Aplicacao.Util\Aplicacao.Util.csproj" />
+  </ItemGroup>
+
 </Project>

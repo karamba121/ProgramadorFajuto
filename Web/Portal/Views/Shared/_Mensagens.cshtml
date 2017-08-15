@@ -1,0 +1,20 @@
+﻿@if (TempData["Mensagem"] != null)
+{
+    <script>
+        ProgramadorFajuto.AdicionarMensagem("@TempData["Mensagem"]");
+    </script>
+}
+
+@if (TempData["MensagemDeSucesso"] != null)
+{
+    <script>
+        ProgramadorFajuto.AdicionarMensagemDeSucesso("@TempData["MensagemDeSucesso"]");
+    </script>
+}
+
+@if (TempData["MensagemDeErro"] != null)
+{
+    <script>
+        ProgramadorFajuto.AdicionarMensagemDeErro("@TempData["MensagemDeErro"]");
+    </script>
+}

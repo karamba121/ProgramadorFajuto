@@ -15,7 +15,7 @@ namespace ProgramadorFajuto.Domain.Dominio.Entidades
             this.Tags = tags;
         }
 
-        public Post() { }
+        private Post() { }
         public Blog Blog { get; set; }
         public IEnumerable<Comentario> Comentarios { get; set; }
         public IEnumerable<Tag> Tags { get; set; }
