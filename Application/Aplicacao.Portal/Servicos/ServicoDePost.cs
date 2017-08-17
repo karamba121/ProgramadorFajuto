@@ -4,15 +4,14 @@ using ProgramadorFajuto.Domain.Dominio.Entidades;
 using ProgramadorFajuto.Infraestructure.Infra.Contratos;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ProgramadorFajuto.Application.Aplicacao.Portal.Servicos
 {
-    public class ServicoDeHome : IServicoDeHome
+    public class ServicoDePost : IServicoDePost
     {
         private readonly IServicoDePersistencia _servicoDePersistencia;
 
-        public ServicoDeHome(IServicoDePersistencia servicoDePersistencia) => this._servicoDePersistencia = servicoDePersistencia;
+        public ServicoDePost(IServicoDePersistencia servicoDePersistencia) => this._servicoDePersistencia = servicoDePersistencia;
 
         public IEnumerable<Post> ListarPosts()
         {
@@ -32,11 +31,11 @@ namespace ProgramadorFajuto.Application.Aplicacao.Portal.Servicos
             }
         }
 
-        public IEnumerable<Post> ListarPosts(int pagina)
+        public IEnumerable<Tag> ListarTags()
         {
             try
             {
-                return this._servicoDePersistencia.RepositorioDePosts.ListarTodos(pagina);
+                return this._servicoDePersistencia.RepositorioDeTags.ListarTodos();
             }
 
             catch (ExcecaoDeAplicacao)
@@ -50,11 +49,11 @@ namespace ProgramadorFajuto.Application.Aplicacao.Portal.Servicos
             }
         }
 
-        public IEnumerable<Post> ListarPostsMaisPopulares(IEnumerable<Post> posts)
+        public Post ObterPostPorId(int id)
         {
             try
             {
-                return posts.OrderBy(p => p.Comentarios.Count()).Take(5).ToList();
+                return this._servicoDePersistencia.RepositorioDePosts.Obter(p => p.Id == id);
             }
 
             catch (ExcecaoDeAplicacao)

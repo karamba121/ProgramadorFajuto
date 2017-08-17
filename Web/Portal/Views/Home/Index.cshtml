@@ -1,5 +1,74 @@
-﻿@{
+﻿@model ModeloDeHome
+@{
     ViewData["Title"] = "Home";
 }
 
-<h1>programador fajuto</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-xs-12">
+            @foreach (var post in Model.Posts)
+            {
+                <section class="white">
+                    <div class="post-cabecalho">
+                        <ul>
+                            @foreach (var tag in post.Tags)
+                            {
+                                <li class="tag-cabecalho @tag.Valor"><h1 class="center-block">@tag.Valor</h1></li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="conteudo">
+                        <h3 class="text-uppercase"><b>@post.Titulo</b></h3>
+                    </div>
+                    <div class="conteudo">
+                        <span class="opacity">em @post.Inclusao.ToString("dd \\de MMMM \\de yyyy")</span>, por @post.Autor.Nome
+                    </div>
+                    <div class="conteudo">
+                        <h5>@post.Descricao</h5>
+                    </div>
+                    <div class="conteudo">
+                        @(Html.Raw(post.Conteudo.Substring(0, post.Conteudo.Length > 360 ? 360 : post.Conteudo.Length) + " [...]"))
+                    </div>
+                    <div class="conteudo">
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <a class="button text-capitalize" href="@Url.Action("Detalhes", "Post", new { Id = post.Id })"><b>Continue lendo</b></a>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <h3 class="pull-right"><b>Comentarios</b><span class="tag">@post.Comentarios.Count()</span></h3>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            }
+            <div class="conteudo text-center">
+                <a href="@Url.Action("Index", "Home", new { pagina = Model.Posts.NumeroDaPagina - 1})" class="button text-capitalize @(Model.Posts.TemPaginaAnterior ? "" : "d-none")"><</a>
+                <a href="@Url.Action("Index", "Home", new { pagina = Model.Posts.NumeroDaPagina + 1})" class="button text-capitalize @(Model.Posts.TemPaginaPosterior ? "" : "d-none")">></a>
+            </div>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
+            <section class="white">
+                <div class="conteudo cinza">
+                    <h4>Posts mais populares</h4>
+                </div>
+                <ul>
+                    @foreach (var post in Model.PostsMaisPopulares)
+                    {
+                        <li class="conteudo">
+                            <a href="@Url.Action("Detalhes", "Post", new { id = post.Id })">
+                                <img src="~/img/designer.jpg" alt="@post.Titulo" class="img-responsive rounded-circle" />
+                                <span>@post.Titulo</span><br />
+                                <span>
+                                    @foreach (var tag in post.Tags)
+                                    {
+                                        <i class="tag">@tag.Valor</i>
+                                    }
+                                </span>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </section>
+        </div>
+    </div>
+</div>

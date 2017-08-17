@@ -2,8 +2,16 @@
     ViewData["Title"] = "Formatar Email Marketing";
 }
 
-<form asp-controller="Ferramentas" asp-action="FormatarEmailMarketing" enctype="multipart/form-data">
-    <label>Arquivo .html recortado</label>
-    <input type="file" name="arquivo" multiple />
-    <button type="submit" class="btn"><b>Enviar</b></button>
-</form>
+<div id="content">
+    <div class="container">
+        <div class="white">
+            <div class="conteudo">
+                <form asp-controller="Ferramentas" asp-action="FormatarEmailMarketing" enctype="multipart/form-data">
+                    <label>Arquivo .html</label>
+                    <input type="file" name="arquivo" multiple />
+                    <button type="submit" class="btn"><b>Enviar</b></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

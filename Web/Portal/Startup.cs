@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,8 +13,12 @@ using ProgramadorFajuto.Infraestructure.Infra.Contratos;
 using ProgramadorFajuto.Infraestructure.Infra.Servicos.EF;
 using ProgramadorFajuto.Infraestructure.Infra.Servicos.ServicoDeAutenticacao;
 using ProgramadorFajuto.Infraestructure.Infra.Servicos.ServicoDeCriptografia;
+using ProgramadorFajuto.Infraestructure.Infra.Servicos.ServicoDeFormatacaoDeEmail;
+using ProgramadorFajuto.Infraestructure.Infra.Servicos.ServicoDeGeracaoDeDados;
 using ProgramadorFajuto.Infraestructure.Infra.Servicos.ServicoDeInicializacao;
 using System;
+using System.IO.Compression;
+using System.Linq;
 
 namespace ProgramadorFajuto.Web.Portal
 {
@@ -37,8 +42,17 @@ namespace ProgramadorFajuto.Web.Portal
                 o.LogoutPath = new PathString("/Login/Deslogar/");
             });
 
-            services.AddDistributedMemoryCache();
             services.AddSession();
+            services.AddDistributedMemoryCache();
+            services.AddResponseCaching();
+
+            services.Configure<GzipCompressionProviderOptions>(options => options.Level = CompressionLevel.Fastest);
+            services.AddResponseCompression(options =>
+            {
+                options.Providers.Add<GzipCompressionProvider>();
+                options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[] { "image/svg+xml", "application/atom+xml" });
+            });
+
             services.AddMvc();
 
             services.AddSingleton(typeof(IHttpContextAccessor), typeof(HttpContextAccessor));
@@ -47,10 +61,13 @@ namespace ProgramadorFajuto.Web.Portal
             services.AddScoped(typeof(IServicoDePersistencia), typeof(UnidadeDeTrabalhoEF));
             services.AddScoped(typeof(IServicoDeCriptografia), typeof(CriptografiaSHA256));
             services.AddScoped(typeof(IServicoDeAutenticacao), typeof(AutenticacaoPorCookie));
+            services.AddScoped(typeof(IServicoDeFormatacaoDeEmail), typeof(FormatadorPhotoshop));
+            services.AddScoped(typeof(IServicoDeGeracaoDeDados), typeof(GeradorBogus));
 
             services.AddScoped(typeof(IServicoDeLogin), typeof(ServicoDeLogin));
             services.AddScoped(typeof(IServicoDeHome), typeof(ServicoDeHome));
             services.AddScoped(typeof(IServicoDeFerramentas), typeof(ServicoDeFerramentas));
+            services.AddScoped(typeof(IServicoDePost), typeof(ServicoDePost));
         }
 
         public void Configure(IApplicationBuilder app, IServiceProvider serviceProvider)
@@ -64,6 +81,7 @@ namespace ProgramadorFajuto.Web.Portal
             });
 
             app.UseSession();
+            app.UseResponseCompression();
             app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
 

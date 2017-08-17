@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Cadastro";
+}
+
+<div id="content">
+    <section id="cadastro">
+        <div class="container">
+            <form asp-controller="Login" asp-action="Cadastrar" method="post" class="mx-auto">
+                <label>Nome:</label>
+                <input type="text" name="nome" />
+                <label>E-mail:</label>
+                <input type="text" name="email" />
+                <label>Senha:</label>
+                <input type="password" name="senha" />
+                <button type="submit"><b>Cadastrar</b></button>
+            </form>
+        </div>
+    </section>
+</div>

@@ -4,7 +4,7 @@ namespace ProgramadorFajuto.Domain.Dominio.Entidades
 {
     public class Comentario : Entidade
     {
-        private Comentario() { }
+        public Comentario() { }
         public Comentario(Post post, Usuario autor, string conteudo)
         {
             Post = post;

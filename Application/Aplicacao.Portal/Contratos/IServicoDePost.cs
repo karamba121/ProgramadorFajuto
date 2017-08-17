@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace ProgramadorFajuto.Application.Aplicacao.Portal.Contratos
 {
-    public interface IServicoDeHome
+    public interface IServicoDePost
     {
+        Post ObterPostPorId(int id);
         IEnumerable<Post> ListarPosts();
-        IEnumerable<Post> ListarPosts(int pagina);
-        IEnumerable<Post> ListarPostsMaisPopulares(IEnumerable<Post> posts);
+        IEnumerable<Tag> ListarTags();
     }
 }

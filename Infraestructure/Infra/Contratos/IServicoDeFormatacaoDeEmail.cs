@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.IO;
 
-namespace ProgramadorFajuto.Application.Aplicacao.Portal.Contratos
+namespace ProgramadorFajuto.Infraestructure.Infra.Contratos
 {
-    public interface IServicoDeFerramentas
+    public interface IServicoDeFormatacaoDeEmail
     {
         Stream Formatar(IFormFile arquivo);
     }

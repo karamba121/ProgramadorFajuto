@@ -7,5 +7,6 @@ namespace ProgramadorFajuto.Application.Aplicacao.Portal.Contratos
     {
         Task AutenticarAsync(ModeloDeLogin modeloDeLogin);
         Task DeslogarAsync();
+        Task CadastrarAsync(string nome, string email, string senha);
     }
 }

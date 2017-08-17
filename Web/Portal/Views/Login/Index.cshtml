@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+<div id="content">
+    <section id="login">
+        <div class="container">
+            <form asp-controller="Login" asp-action="Autenticar" method="post" class="mx-auto">
+                <label>E-mail ou Apelido:</label>
+                <input type="text" name="usuario" />
+                <label>Senha:</label>
+                <input type="password" name="senha" />
+                <button type="submit"><b>Entrar</b></button>
+            </form>
+        </div>
+    </section>
+    <section>
+        <div class="container text-center">
+            <h3>Não possui uma conta? Cadastre-se <a href="@Url.Action("Cadastro", "Login")">A>Aqui</a>, é free.</h3>
+        </div>
+    </section>
+</div>

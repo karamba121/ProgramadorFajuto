@@ -1,6 +1,4 @@
-﻿using ProgramadorFajuto.Domain.Dominio.Entidades;
-using ProgramadorFajuto.Infraestructure.Infra.Contratos;
-using System.Collections.Generic;
+﻿using ProgramadorFajuto.Infraestructure.Infra.Contratos;
 using System.Linq;
 
 namespace ProgramadorFajuto.Infraestructure.Infra.Servicos.ServicoDeInicializacao
@@ -9,30 +7,37 @@ namespace ProgramadorFajuto.Infraestructure.Infra.Servicos.ServicoDeInicializaca
     {
         private readonly IServicoDePersistencia _servicoDePersistencia;
         private readonly IServicoDeCriptografia _servicoDeCriptografia;
+        private readonly IServicoDeGeracaoDeDados _servicoDeGeracaoDeDados;
 
-        public Inicializador(IServicoDePersistencia servicoDePersistencia, IServicoDeCriptografia servicoDeCriptografia)
+        public Inicializador(IServicoDePersistencia servicoDePersistencia, IServicoDeCriptografia servicoDeCriptografia, IServicoDeGeracaoDeDados servicoDeGeracaoDeDados)
         {
             this._servicoDePersistencia = servicoDePersistencia;
             this._servicoDeCriptografia = servicoDeCriptografia;
+            this._servicoDeGeracaoDeDados = servicoDeGeracaoDeDados;
         }
 
         public void GG()
         {
             if (!this._servicoDePersistencia.RepositorioDePosts.ListarTodos().Any())
             {
-                var salt = this._servicoDeCriptografia.ObterSalt();
-                var senha = this._servicoDeCriptografia.ObterHash("@Stag121" + salt);
-                var usuario = new Usuario("Matheus", "matheus.stag@gmail.com", senha, salt);
-                var blog = new Blog(usuario);
-                var tags = new List<Tag>()
-                {
-                    new Tag("Teste"),
-                    new Tag("Outra tag")
-                };
+                var usuarios = this._servicoDeGeracaoDeDados.GerarUsuarios(200);
 
-                var post = new Post(blog, usuario, "Lorem Ipsum", "dollor sit amet nor ed sictium", "falksdj faklsdjf asdkfj asldkjfas dfjadlkfjadlkfjas dfjasdlkfjasldkfj asdlkfjas dlfalksdjflaksdjf aslkdjfaslkdfja dkfja sdfa sdfjaskld fjaslkçd faskdj fasd", tags);
+                this._servicoDePersistencia.RepositorioDeUsuarios.Adicionar(usuarios);
+                this._servicoDePersistencia.Persistir();
 
-                this._servicoDePersistencia.RepositorioDePosts.Adicionar(post);
+                var tags = this._servicoDeGeracaoDeDados.GerarTags(50);
+
+                this._servicoDePersistencia.RepositorioDeTags.Adicionar(tags);
+                this._servicoDePersistencia.Persistir();
+
+                var posts = this._servicoDeGeracaoDeDados.GerarPosts(1000, tags, usuarios);
+
+                this._servicoDePersistencia.RepositorioDePosts.Adicionar(posts);
+                this._servicoDePersistencia.Persistir();
+
+                var comentarios = this._servicoDeGeracaoDeDados.GerarComentarios(10, posts, usuarios);
+
+                this._servicoDePersistencia.RepositorioDeComentarios.Adicionar(comentarios);
                 this._servicoDePersistencia.Persistir();
             }
         }

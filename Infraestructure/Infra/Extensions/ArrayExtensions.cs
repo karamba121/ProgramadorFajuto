@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ProgramadorFajuto.Web.Portal
+namespace ProgramadorFajuto.Infraestructure.Infra.Extensions
 {
     public static class ArrayExtensions
     {

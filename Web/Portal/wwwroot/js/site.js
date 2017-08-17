@@ -20,7 +20,7 @@
     }
 
     $(document).on('pjax:send', function () {
-        ProgramadorFajuto.BloquearTela();
+        setTimeout(function () { ProgramadorFajuto.BloquearTela() }, 500);
     });
 
     $(document).on('pjax:end', function () {
@@ -44,7 +44,10 @@
         var selecionado = $(this);
         selecionado.parent('li').addClass('selecionado').siblings('li').removeClass('selecionado');
         AtualizarMenuSelecionado('fechar');
-        $.pjax.click(event, { container: '#content', fragment: '#content' });
+
+        if ($.support.pjax) {
+            $.pjax.click(event, { container: '#content', fragment: '#content' });
+        }
     });
 
     $(window).on('resize', function () {

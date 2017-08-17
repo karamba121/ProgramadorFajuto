@@ -4,7 +4,7 @@ namespace ProgramadorFajuto.Domain.Dominio.Entidades
 {
     public class Tag : Entidade
     {
-        private Tag() { }
+        public Tag() { }
         public Tag(string valor)
         {
             this.Valor = valor;
