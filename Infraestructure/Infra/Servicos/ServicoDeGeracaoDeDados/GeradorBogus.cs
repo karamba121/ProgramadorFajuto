@@ -30,7 +30,6 @@ namespace ProgramadorFajuto.Infraestructure.Infra.Servicos.ServicoDeGeracaoDeDad
 
         public IEnumerable<Post> GerarPosts(int quantidade, IEnumerable<Tag> tags, IEnumerable<Usuario> usuarios)
         {
-            var i = 0;
             var faker = new Faker<Post>("pt_BR")
                 .StrictMode(false)
                 .RuleFor(p => p.Inclusao, f => f.Date.Between(DateTime.Now.AddYears(-5), DateTime.Now))
