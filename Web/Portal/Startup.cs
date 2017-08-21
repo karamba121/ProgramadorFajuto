@@ -46,11 +46,23 @@ namespace ProgramadorFajuto.Web.Portal
             services.AddDistributedMemoryCache();
             services.AddResponseCaching();
 
-            services.Configure<GzipCompressionProviderOptions>(options => options.Level = CompressionLevel.Fastest);
+            services.Configure<GzipCompressionProviderOptions>(options => options.Level = CompressionLevel.Optimal);
             services.AddResponseCompression(options =>
             {
                 options.Providers.Add<GzipCompressionProvider>();
-                options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[] { "image/svg+xml", "application/atom+xml" });
+                options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[] {
+                    "text/plain",
+                    "text/css",
+                    "application/javascript",
+                    "text/html",
+                    "application/xml",
+                    "text/xml",
+                    "application/json",
+                    "text/json",
+                    "image/svg+xml",
+                    "application/atom+xml",
+                    "application/x-font-ttf"
+                });
             });
 
             services.AddMvc();
@@ -72,6 +84,7 @@ namespace ProgramadorFajuto.Web.Portal
 
         public void Configure(IApplicationBuilder app, IServiceProvider serviceProvider)
         {
+            app.UseResponseCompression();
             app.UseStaticFiles(new StaticFileOptions()
             {
                 OnPrepareResponse = prepareResponse =>
@@ -81,7 +94,6 @@ namespace ProgramadorFajuto.Web.Portal
             });
 
             app.UseSession();
-            app.UseResponseCompression();
             app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
 

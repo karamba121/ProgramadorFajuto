@@ -3,20 +3,20 @@
 }
 
 <div id="content">
-    <section id="login">
-        <div class="container">
+    <div class="container">
+        <section id="login">
             <form asp-controller="Login" asp-action="Autenticar" method="post" class="mx-auto">
                 <label>E-mail ou Apelido:</label>
-                <input type="text" name="usuario" />
+                <input type="text" name="email" />
                 <label>Senha:</label>
                 <input type="password" name="senha" />
                 <button type="submit"><b>Entrar</b></button>
             </form>
-        </div>
-    </section>
+        </section>
+    </div>
     <section>
         <div class="container text-center">
-            <h3>Não possui uma conta? Cadastre-se <a href="@Url.Action("Cadastro", "Login")">A>Aqui</a>, é free.</h3>
+            <h3>Não possui uma conta? Cadastre-se <a href="@Url.Action("Cadastro", "Login")">Aqui</a>, é free.</h3>
         </div>
     </section>
 </div>

@@ -1,14 +1,28 @@
 (function (ProgramadorFajuto, $) {
-    ProgramadorFajuto.BloquearTela = function () {
-        $('body').addClass('carregando');
+    var tempo;
+
+    var div = $('main #content')[1];
+    if (div !== 'undefined') {
+        $(div).unwrap();
+    }
+
+    ProgramadorFajuto.BloquearTela = function (clickDoMenu) {
+        if (typeof (clickDoMenu) !== 'undefined') {
+            setTimeout(function () { $('body').addClass('carregando'); }, 900);
+        }
+
+        else {
+            $('body').addClass('carregando');
+        }
     }
 
     ProgramadorFajuto.DesbloquearTela = function () {
         $('body').removeClass('carregando');
+        setTimeout(function () { $('.white').addClass('animated fadeInDown'); }, 400);
     }
 
     ProgramadorFajuto.AdicionarMensagem = function (mensagem) {
-        swal("Então...", mensagem);
+        swal("Hum...", mensagem);
     }
 
     ProgramadorFajuto.AdicionarMensagemDeSucesso = function (mensagem) {
@@ -19,19 +33,19 @@
         swal("Opa, parece que deu ruim", mensagem, "error");
     }
 
-    $(document).on('pjax:send', function () {
-        setTimeout(function () { ProgramadorFajuto.BloquearTela() }, 500);
+    $(document).on('pjax:end', function (event) {
+        var agora = new Date().getTime() - tempo;
+
+        if (agora < 1400) {
+            setTimeout(function () { ProgramadorFajuto.DesbloquearTela(); }, 1400 - agora);
+        }
+
+        else {
+            ProgramadorFajuto.DesbloquearTela()
+        }
     });
 
-    $(document).on('pjax:end', function () {
-        setTimeout(function () { ProgramadorFajuto.DesbloquearTela() }, 500);
-    });
-
-    $(document).on('pjax:popstate', function () {
-        $.pjax.reload();
-    });
-
-    $(window).on('load', function () {
+    $(window).on('load pjax:end', function () {
         PosicionarTags();
         ProgramadorFajuto.DesbloquearTela();
     });
@@ -40,12 +54,15 @@
         MostrarMenu(!$('#cabecalho').hasClass('exposto'));
     });
 
-    $('#menu').on('click', 'a', function (event) {
+    $('#menu').on('click', 'li a', function (event) {
         var selecionado = $(this);
+
         selecionado.parent('li').addClass('selecionado').siblings('li').removeClass('selecionado');
         AtualizarMenuSelecionado('fechar');
 
         if ($.support.pjax) {
+            tempo = new Date().getTime();
+            ProgramadorFajuto.BloquearTela(true);
             $.pjax.click(event, { container: '#content', fragment: '#content' });
         }
     });
@@ -56,6 +73,7 @@
 
     MostrarMenu = function (mostrar) {
         if (typeof (mostrar) === 'undefined') mostrar = true;
+
         $('#cabecalho').toggleClass('exposto', mostrar);
         $('#nav').toggleClass('exposto', mostrar);
         $('main').toggleClass('exposto', mostrar).one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function () {
@@ -72,6 +90,7 @@
         marcador.removeClassPrefix('cor').addClass('cor-' + posicaoDoItemSelecionado).css({
             'left': posicaoAhEsquerda,
         });
+
         if (tipo === 'fechar') {
             marcador.one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function () {
                 MostrarMenu(false);
@@ -97,8 +116,10 @@
             var classes = el.className.split(" ").filter(function (c) {
                 return c.lastIndexOf(prefix, 0) !== 0;
             });
+
             el.className = $.trim(classes.join(" "));
         });
+
         return this;
     };
 })(window.ProgramadorFajuto = window.ProgramadorFajuto || {}, jQuery);
