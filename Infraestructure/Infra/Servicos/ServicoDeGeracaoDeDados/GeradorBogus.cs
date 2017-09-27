@@ -38,7 +38,7 @@ namespace ProgramadorFajuto.Infraestructure.Infra.Servicos.ServicoDeGeracaoDeDad
                 .RuleFor(p => p.Titulo, f => f.Lorem.Sentence())
                 .RuleFor(p => p.Descricao, f => f.Lorem.Sentence())
                 .RuleFor(p => p.Conteudo, f => f.Lorem.Paragraphs(50))
-                .RuleFor(p => p.Tags, f => f.PickRandom(tags, f.Random.Int(1, 5)).ToList());
+                .RuleFor(p => p.Tags, f => f.PickRandom(tags, f.Random.Int(1, 2)).ToList());
 
             return faker.Generate(quantidade);
         }
