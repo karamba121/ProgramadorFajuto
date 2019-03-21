@@ -10491,8 +10491,628 @@ a.text-dark:focus {
   }
 }
 
-.navbar-laravel {
+@font-face {
+  font-family: "Raleway";
+  src: url("/fonts/raleway-regular.ttf") format("truetype");
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f1f1f1 !important;
+  color: #333;
+  font-family: Raleway, sans-serif !important;
+}
+
+body::after,
+body::before {
+  content: "";
+  height: 50vh;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  background-color: #333;
+  z-index: 9999;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  transition: -webkit-transform 0.4s 0.4s;
+  transition: transform 0.4s 0.4s;
+  transition: transform 0.4s 0.4s, -webkit-transform 0.4s 0.4s;
+}
+
+body::before {
+  top: 0;
+  -webkit-transform: translateY(-100%);
+  transform: translateY(-100%);
+}
+
+body::after {
+  bottom: 0;
+  -webkit-transform: translateY(100%);
+  transform: translateY(100%);
+}
+
+body.carregando::after,
+body.carregando::before {
+  -webkit-transform: translateY(0);
+  transform: translateY(0);
+  transition: -webkit-transform 0.4s 0s;
+  transition: transform 0.4s 0s;
+  transition: transform 0.4s 0s, -webkit-transform 0.4s 0s;
+}
+
+.post-cabecalho {
+  margin: 0;
+}
+
+.post-cabecalho ul li {
+  border-bottom: none;
+  float: left;
+  height: 5em;
+  margin-bottom: 1em;
+  position: relative;
+  text-align: center;
+  cursor: default;
+}
+
+.post-cabecalho ul li h1 {
+  left: 50%;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  color: #fff;
+  font-weight: bold;
+}
+
+.Off-Topic {
+  background-color: #333 !important;
+  color: #fff;
+}
+
+.Azure {
+  background-color: #0072c6 !important;
+  color: #fff;
+}
+
+[class*=C#] {
+  background-color: #609 !important;
+  color: #fff;
+}
+
+@media only screen and (max-width: 768px) {
+  body {
+    padding-bottom: 5em;
+  }
+}
+
+ul,
+ol {
+  margin-bottom: 0;
+}
+
+#nav a,
+#nav a > :hover,
+#nav a:focus {
+  text-decoration: none !important;
+}
+
+#cabecalho {
+  background-color: #f1f1f1;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  height: 80px;
+  width: 100%;
+  margin: 0 auto;
+  transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+  transition: transform 0.5s, -webkit-transform 0.5s;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  z-index: 100;
+}
+
+#nav #cabecalho::after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+#cabecalho.exposto {
+  -webkit-transform: translateY(80px);
+  transform: translateY(80px);
+}
+
+@media only screen and (min-width: 768px) {
+  #cabecalho.exposto {
+    -webkit-transform: translateY(170px);
+    transform: translateY(170px);
+  }
+}
+
+#gatilho {
+  position: relative;
+  float: right;
+  height: 45px;
+  width: 45px;
+  margin-top: 18px;
+  left: 3px;
+  overflow: hidden;
+  text-indent: 100%;
+  white-space: nowrap;
+  color: transparent;
+}
+
+#gatilho span,
+#gatilho span::before,
+#gatilho span::after {
+  /* hamburger icon in CSS */
+  position: absolute;
+  width: 28px;
+  height: 3px;
+  background-color: #333;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+#gatilho span {
+  /* this is the central line */
+  top: 21px;
+  left: 8px;
+  transition: background 0.2s 0.5s;
+}
+
+#gatilho span::before,
+#gatilho span:after {
+  /* these are the upper and lower lines */
+  content: "";
+  left: 0;
+  transition: -webkit-transform 0.2s 0.5s;
+  transition: transform 0.2s 0.5s;
+  transition: transform 0.2s 0.5s, -webkit-transform 0.2s 0.5s;
+}
+
+#gatilho span::before {
+  bottom: 8px;
+}
+
+#gatilho span::after {
+  top: 8px;
+}
+
+.exposto #gatilho span {
+  /* hide line in the center */
+  background-color: rgba(255, 255, 255, 0);
+}
+
+.exposto #gatilho span::before,
+.exposto #gatilho span::after {
+  /* keep visible other 2 lines */
+  background-color: #333;
+}
+
+.exposto #gatilho span::before {
+  -webkit-transform: translateY(8px) rotate(-45deg);
+  transform: translateY(8px) rotate(-45deg);
+}
+
+.exposto #gatilho span::after {
+  -webkit-transform: translateY(-8px) rotate(45deg);
+  transform: translateY(-8px) rotate(45deg);
+}
+
+#nav {
+  /* this is the 3D navigation container */
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 80px;
+  width: 100%;
+  background-color: #000000;
+  visibility: hidden;
+  /* enable a 3D-space for children elements */
+  -webkit-perspective: 1000px;
+  perspective: 1000px;
+  -webkit-transform: translateY(-100%);
+  transform: translateY(-100%);
+  transition: visibility 0s 0.5s, -webkit-transform 0.5s 0s;
+  transition: transform 0.5s 0s, visibility 0s 0.5s;
+  transition: transform 0.5s 0s, visibility 0s 0.5s, -webkit-transform 0.5s 0s;
+}
+
+#nav.exposto {
+  visibility: visible;
+  -webkit-transform: translateY(0);
+  transform: translateY(0);
+  transition: visibility 0.5s 0s, -webkit-transform 0.5s 0s;
+  transition: transform 0.5s 0s, visibility 0.5s 0s;
+  transition: transform 0.5s 0s, visibility 0.5s 0s, -webkit-transform 0.5s 0s;
+}
+
+@media only screen and (min-width: 768px) {
+  #nav {
+    height: 170px;
+  }
+}
+
+#menu {
+  /* this is the 3D rotating navigation */
+  position: relative;
+  height: 100%;
+  background-color: #333;
+  /* Force Hardware Acceleration */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform-origin: center bottom;
+  transform-origin: center bottom;
+  -webkit-transform: rotateX(90deg);
+  transform: rotateX(90deg);
+  transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+  transition: transform 0.5s, -webkit-transform 0.5s;
+}
+
+#menu::after {
+  /* menu dark cover layer - to enhance perspective effect */
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #000000;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.5s 0s, visibility 0.5s 0s;
+}
+
+#menu li {
+  height: 100%;
+  width: 20%;
+  float: left;
+}
+
+#menu li a img {
+  display: block;
+  margin: -2.5em -1.5em;
+}
+
+#menu a {
+  padding: 2em;
+  position: relative;
+  display: block;
+  height: 100%;
+  color: transparent;
+  transition: background-color 0.2s;
+}
+
+#menu a::before {
+  /* navigation icons */
+  content: "";
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  bottom: auto;
+  right: auto;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  background-size: 50px;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+}
+
+.no-touch #menu a:hover {
+  background-color: #ccc;
+}
+
+#menu .selecionado a {
+  background-color: #ddd;
+}
+
+.no-touch #menu .selecionado a:hover {
+  background-color: #eee;
+}
+
+.exposto #menu {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+.exposto #menu::after {
+  /* menu cover layer - hide it when navigation is visible */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s 0s, visibility 0s 0.5s;
+}
+
+@media only screen and (min-width: 768px) {
+  #menu a {
+    color: #ffffff;
+    font-size: 1em;
+    font-weight: 600;
+    text-align: center;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* truncate text with ellipsis if too long */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 2em;
+  }
+
+  #menu a::before {
+    top: 4.4em;
+    left: 50%;
+    right: auto;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+  }
+
+  #menu li a img {
+    margin: 2em auto;
+  }
+}
+
+.marcador {
+  /* line at the bottom of nav selected item */
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 20%;
+  -webkit-transform-origin: center bottom;
+  transform-origin: center bottom;
+  -webkit-transform: translateZ(0) rotateX(90deg);
+  transform: translateZ(0) rotateX(90deg);
+  transition: left 0.5s, color 0.5s, background-color 0.5s, -webkit-transform 0.5s;
+  transition: transform 0.5s, left 0.5s, color 0.5s, background-color 0.5s;
+  transition: transform 0.5s, left 0.5s, color 0.5s, background-color 0.5s, -webkit-transform 0.5s;
+}
+
+.marcador::before {
+  /* triangle at the bottom of nav selected item */
+  content: "";
+  position: absolute;
+  bottom: 3px;
+  left: 50%;
+  right: auto;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  height: 0;
+  width: 0;
+  border: 10px solid transparent;
+  border-bottom-color: inherit;
+}
+
+.exposto .marcador {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* these are the colors of the markers - line + arrow */
+
+.cor-1 {
+  color: #333;
+  background-color: #333;
+}
+
+.cor-2 {
+  color: #333;
+  background-color: #333;
+}
+
+.cor-3 {
+  color: #333;
+  background-color: #333;
+}
+
+.cor-4 {
+  color: #333;
+  background-color: #333;
+}
+
+.cor-5 {
+  color: #333;
+  background-color: #333;
+}
+
+main {
+  margin: 2em 0;
+  transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+  transition: transform 0.5s, -webkit-transform 0.5s;
+  /* Force Hardware Acceleration in WebKit */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+main.exposto {
+  -webkit-transform: translateY(80px);
+  transform: translateY(80px);
+}
+
+@media only screen and (min-width: 768px) {
+  main.exposto {
+    -webkit-transform: translateY(170px);
+    transform: translateY(170px);
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  #nav {
+    bottom: 0;
+    top: initial;
+    -webkit-transform: translateY(100%);
+    transform: translateY(100%);
+  }
+
+  #cabecalho {
+    bottom: 0;
+    position: fixed;
+  }
+
+  #cabecalho.exposto {
+    -webkit-transform: translateY(-80px) !important;
+    transform: translateY(-80px) !important;
+  }
+}
+
+button,
+.button {
+  border: 1px solid #ccc;
   background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  color: #333;
+  padding: 1em;
+}
+
+button:hover,
+button:focus,
+.button:hover,
+.button:focus {
+  border-color: #333;
+  color: #333;
+  text-decoration: none;
+}
+
+.button.disabled {
+  pointer-events: none;
+  opacity: 0.65;
+}
+
+span.opacity {
+  opacity: 0.4;
+}
+
+.tag {
+  background-color: #333;
+  color: #fff;
+  display: inline-block;
+  padding-left: 8px;
+  padding-right: 8px;
+  text-align: center;
+  margin-left: 10px;
+}
+
+.white {
+  color: #333;
+  background-color: #fff;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-bottom: 1em;
+}
+
+.white img {
+  width: 100%;
+}
+
+.black {
+  color: #fff;
+  background-color: #333;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-bottom: 1em;
+}
+
+.conteudo {
+  padding: 1em;
+  text-align: justify;
+  position: relative;
+}
+
+.conteudo h1,
+h2,
+h3 h4,
+h5 h6 {
+  font-weight: 400;
+  margin: 1em 0;
+}
+
+.cinza {
+  background: #f1f1f1;
+}
+
+ul {
+  -webkit-padding-start: 0;
+  list-style: none;
+}
+
+ul li {
+  border-bottom: 1px solid #ddd;
+  transition: background-color 0.25s, color 0.15s, box-shadow 0.15s, opacity 0.25s, border 0.15s, -webkit-filter 0.25s;
+  transition: background-color 0.25s, color 0.15s, box-shadow 0.15s, opacity 0.25s, filter 0.25s, border 0.15s;
+  transition: background-color 0.25s, color 0.15s, box-shadow 0.15s, opacity 0.25s, filter 0.25s, border 0.15s, -webkit-filter 0.25s;
+}
+
+ul li:hover:not(.tag-cabecalho),
+ul li:focus:not(.tag-cabecalho) {
+  background-color: #ccc;
+  cursor: pointer;
+}
+
+ul li img {
+  width: 3em !important;
+  margin-right: 1em;
+}
+
+.tag-cabecalho {
+  background-color: #ccc;
+}
+
+#boas-vindas {
+  padding: 1em 0;
+  margin: 1em 0;
+}
+
+form:not(.post) {
+  padding: 1em;
+  width: 18em;
+  background-color: #333;
+  color: #f1f1f1;
+}
+
+form > input,
+form > button {
+  width: 16em;
+  margin: 0 !important;
+  outline: none;
+  color: #333;
+  padding: 1em;
+}
+
+form > input,
+form > label,
+form > button {
+  display: block;
+  font-size: 1em;
+  margin: 0 0 1em 0 !important;
+}
+
+form > button {
+  margin: 2em 0 1em 0 !important;
+}
+
+.foto {
+  padding: 3em 1em;
+  background-color: #333;
+}
+
+.foto img {
+  width: 255px;
+}
+
+#slide-tags {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
